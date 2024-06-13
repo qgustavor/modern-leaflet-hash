@@ -1,20 +1,19 @@
 {
+  "name": "@qgustavor/leaflet-hash",
+  "version": "1.0.0",
+  "description": "Modern version of leaflet-hash, which adds URL hashes to web pages with Leaflet maps.",
   "author": "Michael Lawrence Evans",
-  "name": "leaflet-hash",
-  "description": "linkable location hashes for leaflet",
-  "version": "0.2.1",
-  "homepage": "https://github.com/mlevans/leaflet-hash",
+  "contributors": [
+    "Gustavo Rodrigues"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/qgustavor/leaflet-hash",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mlevans/leaflet-hash.git"
+    "url": "https://github.com/qgustavor/leaflet-hash.git"
   },
-  "devDependencies": {
-      "mocha": "~1.8",
-      "expect.js": "~0.2.0"
-  },
-  "main": "leaflet-hash.js",
-  "optionalDependencies": {},
-  "engines": {
-    "node": "*"
+  "module": "leaflet-hash.mjs",
+  "publishConfig": {
+    "provenance": true
   }
 }

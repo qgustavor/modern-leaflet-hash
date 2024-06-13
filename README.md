@@ -1,30 +1,30 @@
-# Leaflet-hash
+# Modern Leaflet Hash
 
-Leaflet-hash lets you to add dynamic URL hashes to web pages with Leaflet maps. You can easily
-link users to specific map views.
-
-![Leaflet-hash](https://github.com/mlevans/leaflet-hash/raw/master/screenshots/screenshot.png)
-
-### Demo
-You can view a demo of leaflet-hash at [mlevans.github.io/leaflet-hash/map.html](http://mlevans.github.io/leaflet-hash/map.html).
+This fork of [Leaflet-hash](https://github.com/mlevans/leaflet-hash), which lets you to add dynamic URL hashes to web pages with Leaflet maps, is made to be used with ES Module imports.
 
 ### Getting started
 
-1. Prepare a basic leaflet map. You can find instructions on [Leaflet's quick-start guide](http://leaflet.cloudmade.com/examples/quick-start.html).
+1. Prepare a basic leaflet map.
 
-2. Include [leaflet-hash.js](https://github.com/mlevans/leaflet-hash/blob/master/leaflet-hash.js).
+2. Include the plugin:
 
-3. Once you have initialized the map (an instance of [L.Map](http://leaflet.cloudmade.com/reference.html#map-usage)), add the following code:
+- `import { createHash } from '@qgustavor/leaflet-hash'` when using bundle tools (remember to install the library using npm or something else)
+- `import { createHash } from 'https://unpkg.com/@qgustavor/leaflet-hash/leaflet-hash.global.mjs'` when loading directly on a browser
 
-	```javascript
-        // Assuming your map instance is in a variable called map
-        var hash = new L.Hash(map);
-    ```
+3. Initialize the plugin:
+
+```javascript
+// Assuming your map instance is in a variable called map
+const map = L.map('example')
+const hash = createHash(map)
+```
 
 ### Author
+
 [@mlevans](http://github.com/mlevans)
 
 ### Contributors
+
 [@calvinmetcalf](http://github.com/calvinmetcalf)
 
 [@jfirebaugh](http://github.com/jfirebaugh)
@@ -35,7 +35,8 @@ You can view a demo of leaflet-hash at [mlevans.github.io/leaflet-hash/map.html]
 
 [@yohanboniface](http://github.com/yohanboniface)
 
+[@qgustavor](http://github.com/qgustavor)
 
 ### License
 
-MIT License. See [LICENSE](https://github.com/mlevans/leaflet-hash/blob/master/LICENSE.md) for details.
+MIT License. See [LICENSE](https://github.com/qgustavor/leaflet-hash/blob/master/LICENSE.md) for details.
