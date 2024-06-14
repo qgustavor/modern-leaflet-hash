@@ -9,7 +9,7 @@ This fork of [Leaflet-hash](https://github.com/mlevans/leaflet-hash), which lets
 2. Include the plugin:
 
 - `import { createHash } from '@qgustavor/leaflet-hash'` when using bundle tools (remember to install the library using npm or something else)
-- `import { createHash } from 'https://unpkg.com/@qgustavor/leaflet-hash/leaflet-hash.global.mjs'` when loading directly on a browser
+- `<script src="https://unpkg.com/@qgustavor/leaflet-hash/dist/leaflet-hash.global.js">` when loading directly on a browser
 
 3. Initialize the plugin:
 

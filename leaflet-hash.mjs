@@ -3,7 +3,7 @@ import L from 'leaflet'
 /**
  * Class representing the hash management for a Leaflet map.
  */
-class Hash {
+export class Hash {
   /**
    * Creates an instance of Hash.
    * @param {L.Map} map - A Leaflet map instance.
@@ -26,15 +26,15 @@ class Hash {
    * @returns {{center: L.LatLng, zoom: number} | false} The parsed center and zoom level or false if invalid.
    */
   static parseHash (hash) {
-    if (hash.startsWith('#')) {
+    if (hash.startsWith('@')) {
       hash = hash.slice(1)
     }
-    const args = hash.split('/')
+    const args = hash.split(',')
     if (args.length === 3) {
-      const zoom = parseInt(args[0], 10)
-      const lat = parseFloat(args[1])
-      const lon = parseFloat(args[2])
-      if (isNaN(zoom) || isNaN(lat) || isNaN(lon)) {
+      const lat = parseFloat(args[0])
+      const lon = parseFloat(args[1])
+      const zoom = parseInt(args[2].replace('z', ''), 10)
+      if (isNaN(lat) || isNaN(lon) || isNaN(zoom)) {
         return false
       } else {
         return {
@@ -57,7 +57,7 @@ class Hash {
     const zoom = map.getZoom()
     const precision = Math.max(0, Math.ceil(Math.log(zoom) / Math.LN2))
 
-    return `#${zoom}/${center.lat.toFixed(precision)}/${center.lng.toFixed(precision)}`
+    return `@${center.lat.toFixed(precision)},${center.lng.toFixed(precision)},${zoom}z`
   }
 
   /**
@@ -97,13 +97,13 @@ class Hash {
   onMapMove = () => {
     // Bail if we're moving the map (updating from a hash),
     // or if the map is not yet loaded
-    if (this.movingMap || !this.map._loaded) {
+    if (this.movingMap || !this.map || !this.map._loaded) {
       return
     }
 
     const hash = Hash.formatHash(this.map)
     if (this.lastHash !== hash) {
-      history.replaceState(null, null, hash)
+      history.replaceState(null, '', hash)
       this.lastHash = hash
     }
   }
@@ -120,11 +120,13 @@ class Hash {
     if (parsed) {
       this.movingMap = true
 
-      this.map.setView(parsed.center, parsed.zoom)
+      if (this.map) {
+        this.map.setView(parsed.center, parsed.zoom)
+      }
 
       this.movingMap = false
     } else {
-      this.onMapMove(this.map)
+      this.onMapMove()
     }
   }
 
@@ -145,7 +147,9 @@ class Hash {
    * Starts listening for map move and hash change events.
    */
   startListening () {
-    this.map.on('moveend', this.onMapMove)
+    if (this.map) {
+      this.map.on('moveend', this.onMapMove)
+    }
 
     window.addEventListener('hashchange', this.onHashChange)
     this.isListening = true
@@ -155,7 +159,9 @@ class Hash {
    * Stops listening for map move and hash change events.
    */
   stopListening () {
-    this.map.off('moveend', this.onMapMove)
+    if (this.map) {
+      this.map.off('moveend', this.onMapMove)
+    }
 
     window.removeEventListener('hashchange', this.onHashChange)
     this.isListening = false

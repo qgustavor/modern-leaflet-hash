@@ -6,6 +6,13 @@
   "contributors": [
     "Gustavo Rodrigues"
   ],
+  "scripts": {
+    "build": "npm-run-all clean build:browser types",
+    "build:browser": "rollup leaflet-hash.mjs --file dist/leaflet-hash.global.js --format umd --name leafletHash --globals leaflet:L",
+    "test": "standard",
+    "clean": "rimraf dist",
+    "types": "tsc"
+  },
   "license": "MIT",
   "homepage": "https://github.com/qgustavor/leaflet-hash",
   "repository": {
@@ -13,7 +20,17 @@
     "url": "https://github.com/qgustavor/leaflet-hash.git"
   },
   "module": "leaflet-hash.mjs",
-  "publishConfig": {
-    "provenance": true
+  "main": "dist/leaflet-hash.cjs",
+  "types": "dist/leaflet-hash.d.mts",
+  "files": [
+    "leaflet-hash.mjs",
+    "dist"
+  ],
+  "devDependencies": {
+    "npm-run-all": "^4.1.5",
+    "rimraf": "^5.0.7",
+    "rollup": "4.18.0",
+    "standardjs": "^1.0.0-alpha",
+    "typescript": "^5.4.5"
   }
 }
