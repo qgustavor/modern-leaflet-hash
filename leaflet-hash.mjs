@@ -21,11 +21,34 @@ export class Hash {
   }
 
   /**
+   * Returns the zoom lebel based on the altitude and latitude
+   * @param {number} zoom - The zoom level
+   * @param {number} altitude - The altitude
+   * @returns {number} The latitude
+   */
+  static getZoom (altitude, latitude) {    
+    return Math.log2(133876102434.048 * Math.cos((latitude * Math.PI) / 180) / (altitude * 256))
+  }
+
+  /**
+   * Returns the altitude based on the zoom level and latitude
+   * @param {number} zoom - The zoom level
+   * @param {number} latitude - The latitude
+   * @returns {number} The altitude
+   */
+  static getAltitude (zoom, latitude) {
+    return 133876102434.048 * Math.cos((latitude * Math.PI) / 180) / (Math.pow(2, zoom) * 256)
+  }
+  
+  /**
    * Parses the hash string and returns map center and zoom level.
    * @param {string} hash - The hash string from the URL.
    * @returns {{center: L.LatLng, zoom: number} | false} The parsed center and zoom level or false if invalid.
    */
   static parseHash (hash) {
+    if (hash.startsWith('#')) {
+      hash = hash.slice(1)
+    }
     if (hash.startsWith('@')) {
       hash = hash.slice(1)
     }
@@ -33,8 +56,8 @@ export class Hash {
     if (args.length === 3) {
       const lat = parseFloat(args[0])
       const lon = parseFloat(args[1])
-      const zoom = parseInt(args[2].replace('z', ''), 10)
-      if (isNaN(lat) || isNaN(lon) || isNaN(zoom)) {
+      const zoom = Hash.getZoom(parseInt(args[2], 10), lat)
+      if (isNaN(zoom) || isNaN(lat) || isNaN(lon)) {
         return false
       } else {
         return {
@@ -56,8 +79,9 @@ export class Hash {
     const center = map.getCenter()
     const zoom = map.getZoom()
     const precision = Math.max(0, Math.ceil(Math.log(zoom) / Math.LN2))
+    const altitude = Math.round(Hash.getAltitude(zoom, center.lat))
 
-    return `@${center.lat.toFixed(precision)},${center.lng.toFixed(precision)},${zoom}z`
+    return `#@${center.lat.toFixed(precision)},${center.lng.toFixed(precision)},${altitude}m`
   }
 
   /**
