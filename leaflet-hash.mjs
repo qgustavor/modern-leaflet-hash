@@ -26,7 +26,7 @@ export class Hash {
    * @param {number} altitude - The altitude
    * @returns {number} The latitude
    */
-  static getZoom (altitude, latitude) {    
+  static getZoom (altitude, latitude) {
     return Math.log2(133876102434.048 * Math.cos((latitude * Math.PI) / 180) / (altitude * 256))
   }
 
@@ -39,7 +39,7 @@ export class Hash {
   static getAltitude (zoom, latitude) {
     return 133876102434.048 * Math.cos((latitude * Math.PI) / 180) / (Math.pow(2, zoom) * 256)
   }
-  
+
   /**
    * Parses the hash string and returns map center and zoom level.
    * @param {string} hash - The hash string from the URL.
@@ -62,7 +62,7 @@ export class Hash {
       } else {
         return {
           center: new L.LatLng(lat, lon),
-          zoom: zoom
+          zoom
         }
       }
     } else {
@@ -127,7 +127,7 @@ export class Hash {
 
     const hash = Hash.formatHash(this.map)
     if (this.lastHash !== hash) {
-      history.replaceState(null, '', hash)
+      window.history.replaceState(null, '', hash)
       this.lastHash = hash
     }
   }
@@ -136,7 +136,7 @@ export class Hash {
    * Updates the map view based on the current hash in the URL.
    */
   update = () => {
-    const hash = location.hash
+    const hash = window.location.hash
     if (hash === this.lastHash) {
       return
     }
