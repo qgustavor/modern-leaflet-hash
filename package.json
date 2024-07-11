@@ -14,10 +14,10 @@
     "types": "tsc"
   },
   "license": "MIT",
-  "homepage": "https://github.com/qgustavor/leaflet-hash",
+  "homepage": "https://github.com/qgustavor/modern-leaflet-hash",
   "repository": {
     "type": "git",
-    "url": "https://github.com/qgustavor/leaflet-hash.git"
+    "url": "https://github.com/qgustavor/modern-leaflet-hash.git"
   },
   "module": "leaflet-hash.mjs",
   "main": "dist/leaflet-hash.cjs",
