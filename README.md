@@ -19,6 +19,8 @@ const map = L.map('example')
 const hash = createHash(map)
 ```
 
+If you want this plugin to format using zoom level instead of altitude, set the second argument of `createHash` to `true` like this: `createHash(map, true)`.
+
 ### Author
 
 [@mlevans](http://github.com/mlevans)
