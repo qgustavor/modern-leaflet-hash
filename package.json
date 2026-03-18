@@ -1,6 +1,6 @@
 {
   "name": "@qgustavor/leaflet-hash",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "Modern version of leaflet-hash, which adds URL hashes to web pages with Leaflet maps.",
   "author": "Michael Lawrence Evans",
   "contributors": [
