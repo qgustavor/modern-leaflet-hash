@@ -7,13 +7,19 @@ export class Hash {
   /**
    * Creates an instance of Hash.
    * @param {L.Map} map - A Leaflet map instance.
+   * @param {boolean} useZoom - True for formatting zoom level instead of altitude
    */
-  constructor (map) {
+  constructor (map, useZoom) {
     /**
      * @type {number}
      * @description Delay time in milliseconds for change handling.
      */
     this.changeDefer = 100
+    /**
+     * @type {boolean}
+     * @description True for formatting zoom level instead of altitude
+     */
+    this.useZoom = !!useZoom
 
     if (map) {
       this.init(map)
@@ -21,7 +27,7 @@ export class Hash {
   }
 
   /**
-   * Returns the zoom lebel based on the altitude and latitude
+   * Returns the zoom level based on the altitude and latitude
    * @param {number} zoom - The zoom level
    * @param {number} altitude - The altitude
    * @returns {number} The latitude
@@ -73,16 +79,20 @@ export class Hash {
   }
 
   /**
-   * Formats the map's center and zoom level into a hash string.
+   * Formats the map's center and altitude (or zoom level) into a hash string.
    * @param {L.Map} map - A Leaflet map instance.
+   * @param {boolean} useZoom - True for formatting zoom level instead of altitude
    * @returns {string} The formatted hash string.
    */
-  static formatHash (map) {
+  static formatHash (map, useZoom) {
     const center = map.getCenter()
     const zoom = map.getZoom()
     const precision = Math.max(0, Math.ceil(Math.log(zoom) / Math.LN2))
-    const altitude = Math.round(Hash.getAltitude(zoom, center.lat))
+    if (useZoom) {
+      return `#@${center.lat.toFixed(precision)},${center.lng.toFixed(precision)},${zoom}z`
+    }
 
+    const altitude = Math.round(Hash.getAltitude(zoom, center.lat))
     return `#@${center.lat.toFixed(precision)},${center.lng.toFixed(precision)},${altitude}m`
   }
 
@@ -127,7 +137,7 @@ export class Hash {
       return
     }
 
-    const hash = Hash.formatHash(this.map)
+    const hash = Hash.formatHash(this.map, this.useZoom)
     if (this.lastHash !== hash) {
       window.history.replaceState(null, '', hash)
       this.lastHash = hash
