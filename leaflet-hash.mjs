@@ -56,7 +56,9 @@ export class Hash {
     if (args.length === 3) {
       const lat = parseFloat(args[0])
       const lon = parseFloat(args[1])
-      const zoom = Hash.getZoom(parseInt(args[2], 10), lat)
+      const zoom = args[2].endsWith('z')
+        ? parseInt(args[2], 10)
+        : Hash.getZoom(parseInt(args[2], 10), lat)
       if (isNaN(zoom) || isNaN(lat) || isNaN(lon)) {
         return false
       } else {
