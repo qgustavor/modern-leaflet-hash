@@ -17,7 +17,7 @@
   "homepage": "https://github.com/qgustavor/modern-leaflet-hash",
   "repository": {
     "type": "git",
-    "url": "https://github.com/qgustavor/modern-leaflet-hash.git"
+    "url": "git+https://github.com/qgustavor/modern-leaflet-hash.git"
   },
   "module": "leaflet-hash.mjs",
   "main": "dist/leaflet-hash.cjs",
@@ -31,7 +31,6 @@
     "rimraf": "^5.0.7",
     "rollup": "4.18.0",
     "standard": "^17.1.0",
-    "standardjs": "^1.0.0-alpha",
     "typescript": "^5.4.5"
   }
 }
